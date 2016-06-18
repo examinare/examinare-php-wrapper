@@ -16,7 +16,7 @@
 	$details["delivery_by"]="SMS";// Must be set otherwise it will be sent by SMS.
 	
                         
-	$api2->Data($details);
+	$api2->Data($details); 
 						
 	$result=$api2->Execute();
 						
