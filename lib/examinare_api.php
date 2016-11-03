@@ -60,6 +60,35 @@ public $returnjson=0;
 			}
 			
 		}
+		
+	public function ExecuteRaw(){ // Used to get the raw file from the url.
+		$sendinfo=$this->sendinfo;
+		$method = "POST";
+		$action=$this->sendinfo['url'];
+		$fields="";
+    	foreach ($sendinfo as $key => $value)
+    	{
+        	if ($key != 'url')
+        	{
+            	$fields .= $key . '=' . rawurlencode($value) . '&';
+        	}
+    	}
+			$fields = substr($fields, 0, strlen($fields) - 1);
+			$ch = curl_init();
+    		curl_setopt($ch, CURLOPT_URL, $action);
+    		curl_setopt($ch, CURLOPT_POST, 1);
+    		curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$result = curl_exec($ch);
+			$info_arrays = curl_getinfo($ch);
+			curl_close($ch);
+			if($result === false ){
+				return false;
+			}else{
+				return $result;
+			}
+			
+		}
 	public function toArray($xml) {
         $array = json_decode(json_encode($xml), TRUE);
         
